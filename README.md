@@ -15,8 +15,10 @@ Vue Kanban : Suivi visuel des dossiers par étape.
 <img width="945" height="255" alt="image" src="https://github.com/user-attachments/assets/295de4fa-b1f3-4d1a-b569-3ecd94474fce" />
 
 Vue Calendrier : Visualisation temporelle des émissions de documents.
+<img width="814" height="485" alt="image" src="https://github.com/user-attachments/assets/93ca0634-6e3a-48f3-8bfe-7382bf84d612" />
 
 Vue Liste enrichie : Utilisation de badges de couleur pour une lecture rapide des statuts.
+<img width="945" height="243" alt="image" src="https://github.com/user-attachments/assets/dd11b91d-0553-4cc5-9de5-181c50afa657" />
 
 Automatisation : Génération automatique du corps du texte via des déclencheurs Python (@api.onchange).
 
