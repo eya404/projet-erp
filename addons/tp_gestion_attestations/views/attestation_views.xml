@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_tp_attestation" model="ir.actions.act_window">
+        <field name="name">Attestations</field>
+        <field name="res_model">tp.attestation</field>
+        <field name="view_mode">kanban,tree,form,calendar</field>
+    </record>
+
+    <menuitem id="menu_attestation_root" name="Gestion Attestations" sequence="10"/>
+    <menuitem id="menu_attestation_list" name="Mes Attestations" 
+              parent="menu_attestation_root" 
+              action="action_tp_attestation" 
+              sequence="10"/>
+
+    <record id="view_tp_attestation_kanban" model="ir.ui.view">
+        <field name="name">tp.attestation.kanban</field>
+        <field name="model">tp.attestation</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click shadow-sm border-start border-4 border-primary">
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title" style="font-size: 16px;">
+                                    <field name="name"/>
+                                </strong>
+                                <div><i class="fa fa-user me-1"/> <field name="beneficiaire"/></div>
+                                <div class="mt-2">
+                                    <field name="type_attestation" widget="badge" decoration-info="type_attestation == 'stage'" decoration-success="type_attestation == 'travail'"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_tp_attestation_calendar" model="ir.ui.view">
+        <field name="name">tp.attestation.calendar</field>
+        <field name="model">tp.attestation</field>
+        <field name="arch" type="xml">
+            <calendar string="Planning" date_start="date_emission" color="type_attestation" quick_create="false">
+                <field name="beneficiaire"/>
+                <field name="type_attestation" filters="1"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_tp_attestation_tree" model="ir.ui.view">
+        <field name="name">tp.attestation.tree</field>
+        <field name="model">tp.attestation</field>
+        <field name="arch" type="xml">
+            <tree decoration-muted="state == 'draft'" decoration-success="state == 'valide'">
+                <field name="name" class="fw-bold"/> <field name="beneficiaire"/>
+                <field name="type_attestation" widget="badge" decoration-info="type_attestation == 'stage'" decoration-success="type_attestation == 'travail'"/>
+                <field name="date_emission"/>
+                <field name="state" widget="badge" decoration-warning="state == 'draft'" decoration-success="state == 'valide'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tp_attestation_form" model="ir.ui.view">
+        <field name="name">tp.attestation.form</field>
+        <field name="model">tp.attestation</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_valider" string="Valider" type="object" class="oe_highlight" invisible="state == 'valide'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,valide"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="beneficiaire"/>
+                            <field name="type_attestation" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                        <group>
+                            <field name="date_emission"/>
+                            <field name="signature_image" widget="image" class="oe_avatar"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Contenu">
+                            <field name="description_generee"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

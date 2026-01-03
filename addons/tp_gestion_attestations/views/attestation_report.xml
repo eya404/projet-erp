@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_report_attestation_pdf" model="ir.actions.report">
+        <field name="name">Imprimer Attestation</field>
+        <field name="model">tp.attestation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tp_gestion_attestations.report_attestation_document</field>
+        <field name="report_file">tp_gestion_attestations.report_attestation_document</field>
+        <field name="binding_model_id" ref="model_tp_attestation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_attestation_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: sans-serif; padding: 40px;">
+                        <div class="text-center" style="border-bottom: 2px solid black; margin-bottom: 50px;">
+                            <h2>ATTESTATION DE <t t-esc="o.type_attestation.upper()"/></h2>
+                        </div>
+                        
+                        <p style="font-size: 18px; line-height: 2;">
+                            Je soussignée, <strong>Aya Lestoun</strong>, certifie par la présente que 
+                            M./Mme <strong><t t-esc="o.beneficiaire"/></strong> a effectué les démarches nécessaires 
+                            relatives à son dossier de type <em><t t-esc="o.type_attestation"/></em>.
+                        </p>
+                        
+                        <p style="font-size: 18px;">
+                            Fait pour servir et valoir ce que de droit.
+                        </p>
+
+                        <div class="row mt-5">
+                            <div class="col-8">
+                                <p>Date d'émission : <t t-esc="o.date_emission"/></p>
+                            </div>
+                            <div class="col-4 text-center">
+                                <p><strong>Signature et Cachet</strong></p>
+                                <img t-if="o.signature_image" t-att-src="image_data_uri(o.signature_image)" style="max-height: 120px;"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
